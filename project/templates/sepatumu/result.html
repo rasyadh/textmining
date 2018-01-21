@@ -1,0 +1,45 @@
+{% extends 'sepatumu/base.html' %} {% block content %}
+
+<section class="result">
+    <div class="ui container" id="result-search">
+        <a href="/sepatumu">
+            <img class="ui centered medium image" src="{{ url_for('static', filename='sepatumu/SepatuMu.svg') }}" alt="SepatuMu">
+        </a>
+        <br/>
+        <form class="ui form" method="post" action="/sepatumu/result">
+            <div class="field">
+                <div class="ui fluid big icon input">
+                    <input type="text" name="search" value="{{ text }}" required placeholder="Cari semua hal tentang sepatu..." style="border-radius: 30px;">
+                    <i class="search icon"></i>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<div class="ui container" id="result-content">
+    {% if results %} {% for result in results %}
+    <div class="ui fluid card" style="border-radius: 30px;">
+        <div class="content" style="padding: 20px 20px 10px 20px;">
+            <div class="header">
+                <a href="{{ result.url }}">{{ result.judul }}</a>
+            </div>
+            <div class="meta" style="color: #00661F;">{{ result.url }}</div>
+        </div>
+        <div class="extra content" style="padding: 10px 20px 20px 20px;">
+            <div class="description">
+                {{ result.isi }}
+            </div>
+        </div>
+    </div>
+    {% endfor %} {% else %}
+    <div class="ui fluid card">
+        <div class="content">
+            <div class="header">{{ text }} tidak ditemukan.</div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}

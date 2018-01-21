@@ -1,0 +1,33 @@
+{% extends 'sepatumu/base.html' %} {% block content %}
+
+<div class="ui container" style="padding: 30px;">
+    <h2>Artikel</h2>
+    <form class="ui form" method="POST" action="/sepatumu/data">
+        <div class="field">
+            <input type="text" name="judul" required placeholder="Judul Artikel" />
+        </div>
+        <div class="field">
+            <input type="text" name="url" required placeholder="URL Artikel" />
+        </div>
+        <div class="field">
+            <textarea type="text" name="isi" required placeholder="Isi Artikel"></textarea>
+        </div>
+        <input class="ui button" type="submit" name="submit" value="Tambah Artikel" />
+    </form>
+
+    <table class="ui table">
+        {% for article in articles %}
+        <tr>
+            <td>{{ article.judul }}</td>
+            <td>{{ article.isi }}</td>
+            <td>
+                <form class="ui form" method="POST" action="/sepatumu/data/delete">
+                    <input type="hidden" value="{{ article.id_article }}" name="id_arrticle" />
+                    <input class="ui red button" type="submit" value="Hapus" />
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

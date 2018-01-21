@@ -1,0 +1,50 @@
+{% extends 'sepatumu/base.html' %} {% block content %}
+
+<div class="ui container" style="padding: 30px;">
+    <h2>Text Mining Process</h2>
+    <a class="ui button" href="/sepatumu/data">Artikel</a>
+
+    <h3>Artikel yang belum di mining</h3>
+    <div class="ui cards">
+        {% for article in articles %} {% if not article.isMining %}
+        <div class="card">
+            <div class="content">
+                <div class="header">{{ article.judul }}</div>
+                <div class="description">{{ article.isi }}</div>
+            </div>
+            <form class="ui form" method="POST" action="/sepatumu/process_mining">
+                <input type="hidden" value="{{ article.id_artikel }}" name="id" />
+                <input type="hidden" value="{{ article.judul }}" name="judul" />
+                <input type="hidden" value="{{ article.url }}" name="url" />
+                <input type="hidden" value="{{ article.isi }}" name="isi" />
+                <input class="ui button" type="submit" value="Process Mining" />
+            </form>
+        </div>
+        {% else %}
+        <div class="card">
+            <div class="content">
+                <div class="header">Tidak ada artikel yang belum di mining</div>
+            </div>
+        </div>
+        {% endif %} {% endfor %}
+    </div>
+
+    <h3>Artikel yang sudah di mining</h3>
+    <div class="ui cards">
+        {% for article in articles %} {% if article.isMining %}
+        <div class="card">
+            <div class="content">
+                <div class="header">{{ article.judul }}</div>
+                <div class="description">{{ article.isi }}</div>
+            </div>
+        </div>
+        {% else %}
+        <div class="card">
+            <div class="content">
+                <div class="header">Belum ada artikel yang telah di mining</div>
+            </div>
+        </div>
+        {% endif %} {% endfor %}
+    </div>
+</div>
+{% endblock %}
